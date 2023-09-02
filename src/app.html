@@ -7,6 +7,23 @@
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
+		<script>
+			let themePref = localStorage.getItem('theme');
+			if (themePref) themePref = JSON.parse(themePref);
+			const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)');
+
+			console.log(themePref);
+			if (themePref === 'dark') {
+				document.documentElement.classList.add('dark-theme');
+				document.documentElement.style.colorScheme = 'dark';
+			} else if (themePref === 'light') {
+				document.documentElement.classList.remove('dark-theme');
+				document.documentElement.style.colorScheme = 'light';
+			} else if (darkThemeMq.matches) {
+				document.documentElement.classList.add('dark-theme');
+				document.documentElement.style.colorScheme = 'dark';
+			}
+		</script>
 		<div>%sveltekit.body%</div>
 	</body>
 </html>

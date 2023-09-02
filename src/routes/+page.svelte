@@ -1,10 +1,14 @@
 <script lang="ts">
 	import { Editor } from '$lib/index.js';
+	import Nav from './nav.svelte';
+	
 
 	let saveStatus = 'Saved';
 </script>
 
-<main class="flex justify-center sm:pt-[20vh] sm:px-4">
+<Nav />
+
+<main class="flex justify-center sm:pt-[15vh] sm:px-4">
 	<Editor
 		onUpdate={() => {
 			saveStatus = 'Unsaved';

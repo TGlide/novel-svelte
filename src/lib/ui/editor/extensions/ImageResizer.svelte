@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { anyify } from '$lib/utils.js';
 	import Moveable from 'svelte-moveable';
 
 	export let editor: any;
@@ -22,7 +23,7 @@
 
 {#key key}
 	<Moveable
-		target={document.querySelector('.ProseMirror-selectednode')}
+		target={anyify(document.querySelector('.ProseMirror-selectednode'))}
 		container={null}
 		origin={false}
 		edge={false}
