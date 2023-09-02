@@ -5,6 +5,7 @@
 	import { Editor, Extension, type JSONContent } from '@tiptap/core';
 	import type { EditorProps } from '@tiptap/pm/view';
 	import { useCompletion } from 'ai/svelte';
+	import ImageResizer from './extensions/ImageResizer.svelte';
 	import { onMount } from 'svelte';
 	import { defaultEditorContent } from './default-content.js';
 	import { defaultExtensions } from './extensions/index.js';
@@ -147,4 +148,7 @@
 
 <div id="editor" class={className} bind:this={element}>
 	<slot />
+	{#if editor?.isActive('image')}
+		<ImageResizer {editor} />
+	{/if}
 </div>

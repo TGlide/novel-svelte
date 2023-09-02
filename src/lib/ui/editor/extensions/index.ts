@@ -13,6 +13,8 @@ import Highlight from '@tiptap/extension-highlight';
 // import SlashCommand from "./slash-command";
 import { InputRule } from '@tiptap/core';
 import SlashCommand from './slash-command.js';
+import UpdatedImage from './updated-image.js';
+import UploadImagesPlugin from '../plugins/upload-images.js';
 // import UploadImagesPlugin from "@/ui/editor/plugins/upload-images";
 // import UpdatedImage from "./updated-image";
 
@@ -88,23 +90,23 @@ export const defaultExtensions = [
 				'text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer'
 		}
 	}),
-	// TiptapImage.extend({
-	//   addProseMirrorPlugins() {
-	//     return [UploadImagesPlugin()];
-	//   },
-	// }).configure({
-	//   allowBase64: true,
-	//   HTMLAttributes: {
-	//     class: "rounded-lg border border-stone-200",
-	//   },
-	// }),
-	// UpdatedImage.configure({
-	//   HTMLAttributes: {
-	//     class: "rounded-lg border border-stone-200",
-	//   },
-	// }),
+	TiptapImage.extend({
+		addProseMirrorPlugins() {
+			return [UploadImagesPlugin()];
+		}
+	}).configure({
+		allowBase64: true,
+		HTMLAttributes: {
+			class: 'rounded-lg border border-stone-200'
+		}
+	}),
+	UpdatedImage.configure({
+		HTMLAttributes: {
+			class: 'rounded-lg border border-stone-200'
+		}
+	}),
 	Placeholder.configure({
-		placeholder: ({ node }) => {
+		placeholder: ({ node }: any) => {
 			if (node.type.name === 'heading') {
 				return `Heading ${node.attrs.level}`;
 			}

@@ -1,6 +1,6 @@
 {
 	"name": "novel-svelte",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -80,6 +80,7 @@
 		"clsx": "^2.0.0",
 		"lucide-svelte": "^0.274.0",
 		"openai": "^4.4.0",
+		"svelte-moveable": "^0.43.1",
 		"tailwind-merge": "^1.14.0",
 		"tippy.js": "^6.3.7",
 		"tiptap-markdown": "^0.8.2"
