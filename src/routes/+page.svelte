@@ -2,12 +2,6 @@
 	import { Editor } from '$lib';
 </script>
 
-<main>
+<main class="flex justify-center sm:pt-[20vh] sm:px-4">
 	<Editor />
 </main>
-
-<style lang="postcss">
-	main {
-		padding: 1rem;
-	}
-</style>

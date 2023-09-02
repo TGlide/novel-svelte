@@ -1,9 +1,14 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
-	import { Editor } from '@tiptap/core';
-	import StarterKit from '@tiptap/starter-kit';
-	import defaultEditorContent from './default-content.ts';
-	import { noop } from '$lib/utils/noop.js';
+	import { getPrevText } from '$lib/editor.js';
+	import { createLocalStorageStore } from '$lib/stores/localStorage.js';
+	import { createDebouncedCallback, noop } from '$lib/utils.js';
+	import { Editor, Extension, type JSONContent } from '@tiptap/core';
+	import { useCompletion } from 'ai/svelte';
+	import { onDestroy, onMount } from 'svelte';
+	import { defaultEditorContent } from './default-content.js';
+	import { defaultExtensions } from './extensions/index.js';
+	import { defaultEditorProps } from './props.js';
+	import type { EditorProps } from '@tiptap/pm/view';
 	/**
 	 * The API route to use for the OpenAI completion API.
 	 * Defaults to "/api/generate".
@@ -35,12 +40,12 @@
 	 * A callback function that is called whenever the editor is updated.
 	 * Defaults to () => {}.
 	 */
-	export let onUpdate: (editor?: EditorClass) => void | Promise<void> = noop;
+	export let onUpdate: (editor?: Editor) => void | Promise<void> = noop;
 	/**
 	 * A callback function that is called whenever the editor is updated, but only after the defined debounce duration.
 	 * Defaults to () => {}.
 	 */
-	export let onDebouncedUpdate: (editor?: EditorClass) => void | Promise<void> = noop;
+	export let onDebouncedUpdate: (editor?: Editor) => void | Promise<void> = noop;
 	/**
 	 * The duration (in milliseconds) to debounce the onDebouncedUpdate callback.
 	 * Defaults to 750.
@@ -55,15 +60,85 @@
 	let element: Element;
 	let editor: Editor;
 
+	const { complete, completion, isLoading, stop } = useCompletion({
+		id: 'novel',
+		api: completionApi,
+		onFinish: (_prompt, completion) => {
+			editor?.commands.setTextSelection({
+				from: editor.state.selection.from - completion.length,
+				to: editor.state.selection.from
+			});
+		}
+		// onError: (err) => {
+		// 	toast.error(err.message);
+		// 	if (err.message === 'You have reached your request limit for the day.') {
+		// 		va.track('Rate Limit Reached');
+		// 	}
+		// }
+	});
+
+	const content = createLocalStorageStore(storageKey, defaultValue);
+	let hydrated = false;
+	$: if (editor && $content && !hydrated) {
+		editor.commands.setContent($content);
+		hydrated = true;
+	}
+
+	let prev = '';
+
+	function insertAiCompletion() {
+		const diff = $completion.slice(prev.length);
+		console.log({ $completion, prev, diff });
+		prev = $completion;
+		editor?.commands.insertContent(diff);
+	}
+
+	$: {
+		[$completion];
+		insertAiCompletion();
+	}
+
+	const debouncedUpdates = createDebouncedCallback(async ({ editor }) => {
+		const json = editor.getJSON();
+		content.set(json);
+		onDebouncedUpdate(editor);
+	}, debounceDuration);
+
 	onMount(() => {
 		editor = new Editor({
 			element: element,
-			extensions: [StarterKit],
-			content: '<h1>Hello World! 🌍️ </h1>',
 			onTransaction: () => {
 				// force re-render so `editor.isActive` works as expected
 				editor = editor;
-			}
+			},
+			extensions: [...defaultExtensions, ...extensions],
+			editorProps: {
+				...defaultEditorProps,
+				...editorProps
+			},
+			onUpdate: (e) => {
+				const selection = e.editor.state.selection;
+				const lastTwo = getPrevText(e.editor, {
+					chars: 2
+				});
+
+				if (lastTwo === '++' && !$isLoading) {
+					e.editor.commands.deleteRange({
+						from: selection.from - 2,
+						to: selection.from
+					});
+					complete(
+						getPrevText(e.editor, {
+							chars: 5000
+						})
+					);
+					// complete(e.editor.storage.markdown.getMarkdown());
+				} else {
+					onUpdate(e.editor);
+					debouncedUpdates(e);
+				}
+			},
+			autofocus: 'end'
 		});
 	});
 
@@ -74,16 +149,4 @@
 	});
 </script>
 
-<div id="editor" bind:this={element} />
-
-<style lang="postcss">
-	#editor {
-		border: 1px solid theme('colors.gray.300');
-		padding: 1rem;
-	}
-
-	button.active {
-		background: black;
-		color: white;
-	}
-</style>
+<div id="editor" class={className} bind:this={element} />
