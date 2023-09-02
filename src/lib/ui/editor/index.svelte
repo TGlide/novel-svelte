@@ -89,7 +89,7 @@
 
 	function insertAiCompletion() {
 		const diff = $completion.slice(prev.length);
-		console.log({ $completion, prev, diff });
+
 		prev = $completion;
 		editor?.commands.insertContent(diff);
 	}

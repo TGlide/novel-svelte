@@ -12,7 +12,6 @@
 			if (themePref) themePref = JSON.parse(themePref);
 			const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)');
 
-			console.log(themePref);
 			if (themePref === 'dark') {
 				document.documentElement.classList.add('dark-theme');
 				document.documentElement.style.colorScheme = 'dark';
