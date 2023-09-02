@@ -43,3 +43,7 @@ export function createDebouncedCallback<T extends (...args: any[]) => any>(
 		timeout = setTimeout(() => callback(...args), delay);
 	};
 }
+
+export function anyify(obj: unknown) {
+	return obj as any;
+}

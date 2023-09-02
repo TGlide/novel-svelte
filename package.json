@@ -78,6 +78,7 @@
 		"ai": "^2.2.11",
 		"cal-sans": "^1.0.1",
 		"clsx": "^2.0.0",
+		"lucide-svelte": "^0.274.0",
 		"openai": "^4.4.0",
 		"tailwind-merge": "^1.14.0",
 		"tippy.js": "^6.3.7",

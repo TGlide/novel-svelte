@@ -1,19 +1,21 @@
 <script lang="ts">
 	let className = '';
 	export { className as class };
+
+	export let size = 18;
 </script>
 
 <svg
-	width="469"
-	height="469"
+	width={size}
+	height={size}
 	viewBox="0 0 469 469"
 	fill="none"
 	xmlns="http://www.w3.org/2000/svg"
-	shapeRendering="geometricPrecision"
+	shape-rendering="geometricPrecision"
 	stroke="currentColor"
-	strokeLinecap="round"
-	strokeLinejoin="round"
-	strokeWidth="1.5"
+	stroke-linecap="round"
+	stroke-linejoin="round"
+	stroke-width="1.5"
 	class={className}
 >
 	<path

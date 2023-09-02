@@ -1,33 +1,31 @@
 import { Editor, Extension, type Range } from '@tiptap/core';
 import Suggestion from '@tiptap/suggestion';
 
-import { SvelteRenderer } from './SvelteRenderer.js';
-
 import tippy from 'tippy.js';
-import CommandListJs from './CommandListJs.svelte';
+
+import {
+	CheckSquare,
+	Code,
+	Heading1,
+	Heading2,
+	Heading3,
+	List,
+	ListOrdered,
+	MessageSquarePlus,
+	Text,
+	TextQuote
+} from 'lucide-svelte';
 import CommandList from './CommandList.svelte';
-// import {
-//   Heading1,
-//   Heading2,
-//   Heading3,
-//   List,
-//   ListOrdered,
-//   MessageSquarePlus,
-//   Text,
-//   TextQuote,
-//   Image as ImageIcon,
-//   Code,
-//   CheckSquare,
-// } from "lucide-react";
 // import { toast } from 'sonner';
 // import va from '@vercel/analytics';
 // import { startImageUpload } from '@/ui/editor/plugins/upload-images';
-// import { LoadingCircle, Magic } from '$lib/ui/icons/index.js';
+import { Magic } from '$lib/ui/icons/index.js';
+import type { SvelteComponent } from 'svelte';
 
 export interface CommandItemProps {
 	title: string;
 	description: string;
-	// icon: ReactNode;
+	icon: SvelteComponent;
 }
 
 interface CommandProps {
@@ -62,13 +60,13 @@ const getSuggestionItems = ({ query }: { query: string }) => {
 		{
 			title: 'Continue writing',
 			description: 'Use AI to expand your thoughts.',
-			searchTerms: ['gpt']
-			// icon: <Magic className="w-7" />
+			searchTerms: ['gpt'],
+			icon: Magic
 		},
 		{
 			title: 'Send Feedback',
 			description: 'Let us know how we can improve.',
-			// icon: <MessageSquarePlus size={18} />,
+			icon: MessageSquarePlus,
 			command: ({ editor, range }: CommandProps) => {
 				editor.chain().focus().deleteRange(range).run();
 				window.open('/feedback', '_blank');
@@ -78,7 +76,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
 			title: 'Text',
 			description: 'Just start typing with plain text.',
 			searchTerms: ['p', 'paragraph'],
-			// icon: <Text size={18} />,
+			icon: Text,
 			command: ({ editor, range }: CommandProps) => {
 				editor.chain().focus().deleteRange(range).toggleNode('paragraph', 'paragraph').run();
 			}
@@ -87,7 +85,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
 			title: 'To-do List',
 			description: 'Track tasks with a to-do list.',
 			searchTerms: ['todo', 'task', 'list', 'check', 'checkbox'],
-			// icon: <CheckSquare size={18} />,
+			icon: CheckSquare,
 			command: ({ editor, range }: CommandProps) => {
 				editor.chain().focus().deleteRange(range).toggleTaskList().run();
 			}
@@ -96,7 +94,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
 			title: 'Heading 1',
 			description: 'Big section heading.',
 			searchTerms: ['title', 'big', 'large'],
-			// icon: <Heading1 size={18} />,
+			icon: Heading1,
 			command: ({ editor, range }: CommandProps) => {
 				editor.chain().focus().deleteRange(range).setNode('heading', { level: 1 }).run();
 			}
@@ -105,7 +103,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
 			title: 'Heading 2',
 			description: 'Medium section heading.',
 			searchTerms: ['subtitle', 'medium'],
-			// icon: <Heading2 size={18} />,
+			icon: Heading2,
 			command: ({ editor, range }: CommandProps) => {
 				editor.chain().focus().deleteRange(range).setNode('heading', { level: 2 }).run();
 			}
@@ -114,7 +112,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
 			title: 'Heading 3',
 			description: 'Small section heading.',
 			searchTerms: ['subtitle', 'small'],
-			// icon: <Heading3 size={18} />,
+			icon: Heading3,
 			command: ({ editor, range }: CommandProps) => {
 				editor.chain().focus().deleteRange(range).setNode('heading', { level: 3 }).run();
 			}
@@ -123,7 +121,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
 			title: 'Bullet List',
 			description: 'Create a simple bullet list.',
 			searchTerms: ['unordered', 'point'],
-			// icon: <List size={18} />,
+			icon: List,
 			command: ({ editor, range }: CommandProps) => {
 				editor.chain().focus().deleteRange(range).toggleBulletList().run();
 			}
@@ -132,7 +130,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
 			title: 'Numbered List',
 			description: 'Create a list with numbering.',
 			searchTerms: ['ordered'],
-			// icon: <ListOrdered size={18} />,
+			icon: ListOrdered,
 			command: ({ editor, range }: CommandProps) => {
 				editor.chain().focus().deleteRange(range).toggleOrderedList().run();
 			}
@@ -141,7 +139,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
 			title: 'Quote',
 			description: 'Capture a quote.',
 			searchTerms: ['blockquote'],
-			// icon: <TextQuote size={18} />,
+			icon: TextQuote,
 			command: ({ editor, range }: CommandProps) =>
 				editor
 					.chain()
@@ -155,7 +153,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
 			title: 'Code',
 			description: 'Capture a code snippet.',
 			searchTerms: ['codeblock'],
-			// icon: <Code size={18} />,
+			icon: Code,
 			command: ({ editor, range }: CommandProps) =>
 				editor.chain().focus().deleteRange(range).toggleCodeBlock().run()
 		}
@@ -208,7 +206,7 @@ export const updateScrollView = (container: HTMLElement, item: HTMLElement) => {
 };
 
 const renderItems = () => {
-	let component: CommandListJs | null = null;
+	let component: CommandList | null = null;
 	let popup: any | null = null;
 
 	return {
@@ -222,10 +220,10 @@ const renderItems = () => {
 			const el = document.createElement('div');
 			component = new CommandList({
 				target: el,
-				props
+				props: props as any
 			});
 
-			popup = tippy('body', {
+			popup = (tippy as any)('body', {
 				getReferenceClientRect: props.clientRect,
 				appendTo: () => document.body,
 				content: el,

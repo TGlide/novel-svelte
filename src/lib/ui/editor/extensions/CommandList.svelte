@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { useCompletion } from 'ai/svelte';
-	import type { CommandItemProps } from './slash-command.js';
 	import { getPrevText } from '$lib/editor.js';
 	import { LoadingCircle } from '$lib/ui/icons/index.js';
+	import { useCompletion } from 'ai/svelte';
+	import type { CommandItemProps } from './slash-command.js';
+	import { anyify } from '$lib/utils.js';
 
 	export let items: CommandItemProps[] = [];
 	export let command: any;
@@ -41,7 +42,7 @@
 		// });
 		if (item) {
 			if (item.title === 'Continue writing') {
-				if (isLoading) return;
+				if ($isLoading) return;
 				complete(
 					getPrevText(editor, {
 						chars: 5000,
@@ -54,56 +55,42 @@
 		}
 	};
 
-	// $: {
-	// 	const navigationKeys = ['ArrowUp', 'ArrowDown', 'Enter'];
-	// 	const onKeyDown = (e: KeyboardEvent) => {
-	// 		if (navigationKeys.includes(e.key)) {
-	// 			e.preventDefault();
-	// 			if (e.key === 'ArrowUp') {
-	// 				selectedIndex = (selectedIndex + items.length - 1) % items.length;
-	// 				return true;
-	// 			}
-	// 			if (e.key === 'ArrowDown') {
-	// 				selectedIndex = (selectedIndex + 1) % items.length;
-	// 				return true;
-	// 			}
-	// 			if (e.key === 'Enter') {
-	// 				selectItem(selectedIndex);
-	// 				return true;
-	// 			}
-	// 			return false;
-	// 		}
-	// 	};
-	// 	document.removeEventListener('keydown', onKeyDown);
-	// 	document.addEventListener('keydown', onKeyDown);
-	// }
+	const navigationKeys = ['ArrowUp', 'ArrowDown', 'Enter'];
+	const onKeyDown = (e: KeyboardEvent) => {
+		if (!navigationKeys.includes(e.key)) return;
+		e.preventDefault();
+		if (e.key === 'ArrowUp') {
+			selectedIndex = (selectedIndex + items.length - 1) % items.length;
+		} else if (e.key === 'ArrowDown') {
+			selectedIndex = (selectedIndex + 1) % items.length;
+		} else if (e.key === 'Enter') {
+			selectItem(selectedIndex);
+		}
 
-	// useEffect(() => {
-	// 	selectedIndex = 0;
-	// }, [items]);
+		const item = container.querySelector(`[data-index="${selectedIndex}"]`) as HTMLElement;
+		if (item)
+			item.scrollIntoView({
+				block: 'nearest'
+			});
+	};
 
-	// const commandListContainer = useRef<HTMLDivElement>(null);
-
-	// useLayoutEffect(() => {
-	// 	const container = commandListContainer?.current;
-
-	// 	const item = container?.children[selectedIndex] as HTMLElement;
-
-	// 	if (item && container) updateScrollView(container, item);
-	// }, [selectedIndex]);
+	let container: HTMLElement;
 </script>
+
+<svelte:window on:keydown={onKeyDown} />
 
 {#if items.length > 0}
 	<div
 		id="slash-command"
 		class="z-50 h-auto max-h-[330px] w-72 overflow-y-auto rounded-md border border-stone-200 bg-white px-1 py-2 shadow-md transition-all"
+		bind:this={container}
 	>
 		{#each items as item, index (index)}
 			<button
-				class={`flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm text-stone-900 hover:bg-stone-100 ${
-					index === selectedIndex ? 'bg-stone-100 text-stone-900' : ''
-				}`}
+				class="flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm text-stone-900 hover:bg-stone-100 scroll-my-2
+				{index === selectedIndex ? 'bg-stone-100 text-stone-900' : ''}"
 				on:click={() => selectItem(index)}
+				data-index={index}
 			>
 				<div
 					class="flex h-10 w-10 items-center justify-center rounded-md border border-stone-200 bg-white"
@@ -111,7 +98,7 @@
 					{#if item.title === 'Continue writing' && $isLoading}
 						<LoadingCircle />
 					{:else}
-						<!-- <svelte:component this={item.icon} /> -->
+						<svelte:component this={anyify(item.icon)} size="18" />
 					{/if}
 				</div>
 				<div>

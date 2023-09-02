@@ -3,14 +3,12 @@
 	import { createLocalStorageStore } from '$lib/stores/localStorage.js';
 	import { createDebouncedCallback, noop } from '$lib/utils.js';
 	import { Editor, Extension, type JSONContent } from '@tiptap/core';
+	import type { EditorProps } from '@tiptap/pm/view';
 	import { useCompletion } from 'ai/svelte';
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import { defaultEditorContent } from './default-content.js';
 	import { defaultExtensions } from './extensions/index.js';
 	import { defaultEditorProps } from './props.js';
-	import type { EditorProps } from '@tiptap/pm/view';
-	import CommandList from './extensions/CommandListJs.svelte';
-	import { compile } from 'svelte/compiler';
 	/**
 	 * The API route to use for the OpenAI completion API.
 	 * Defaults to "/api/generate".
