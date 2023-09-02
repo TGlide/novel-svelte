@@ -4,7 +4,7 @@ Based on [Novel](https://github.com/steven-tey/novel)
 
 ## TODO:
 
-- [ ] Menus
+- [x] Slash Menus
 - [ ] Image upload support (use Appwrite?)
-- [ ] Rate Limiting/Provide OpenAPI key on demo (feature flag?)
-- [ ] Theme support
+- [x] Rate Limiting/Provide OpenAPI key on demo (feature flag?)
+- [ ] Theme control in demo
