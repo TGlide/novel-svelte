@@ -63,15 +63,15 @@ const getSuggestionItems = ({ query }: { query: string }) => {
 			searchTerms: ['gpt'],
 			icon: Magic
 		},
-		{
-			title: 'Send Feedback',
-			description: 'Let us know how we can improve.',
-			icon: MessageSquarePlus,
-			command: ({ editor, range }: CommandProps) => {
-				editor.chain().focus().deleteRange(range).run();
-				window.open('/feedback', '_blank');
-			}
-		},
+		// {
+		// 	title: 'Send Feedback',
+		// 	description: 'Let us know how we can improve.',
+		// 	icon: MessageSquarePlus,
+		// 	command: ({ editor, range }: CommandProps) => {
+		// 		editor.chain().focus().deleteRange(range).run();
+		// 		window.open('/feedback', '_blank');
+		// 	}
+		// },
 		{
 			title: 'Text',
 			description: 'Just start typing with plain text.',
