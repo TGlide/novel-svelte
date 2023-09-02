@@ -9,6 +9,8 @@
 	import { defaultExtensions } from './extensions/index.js';
 	import { defaultEditorProps } from './props.js';
 	import type { EditorProps } from '@tiptap/pm/view';
+	import CommandList from './extensions/CommandListJs.svelte';
+	import { compile } from 'svelte/compiler';
 	/**
 	 * The API route to use for the OpenAI completion API.
 	 * Defaults to "/api/generate".
@@ -140,13 +142,11 @@
 			},
 			autofocus: 'end'
 		});
-	});
 
-	onDestroy(() => {
-		if (editor) {
-			editor.destroy();
-		}
+		return () => editor.destroy();
 	});
 </script>
 
-<div id="editor" class={className} bind:this={element} />
+<div id="editor" class={className} bind:this={element}>
+	<slot />
+</div>

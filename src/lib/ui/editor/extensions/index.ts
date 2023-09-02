@@ -12,6 +12,7 @@ import { Markdown } from 'tiptap-markdown';
 import Highlight from '@tiptap/extension-highlight';
 // import SlashCommand from "./slash-command";
 import { InputRule } from '@tiptap/core';
+import SlashCommand from './slash-command.js';
 // import UploadImagesPlugin from "@/ui/editor/plugins/upload-images";
 // import UpdatedImage from "./updated-image";
 
@@ -111,7 +112,7 @@ export const defaultExtensions = [
 		},
 		includeChildren: true
 	}),
-	// SlashCommand,
+	SlashCommand,
 	TiptapUnderline,
 	TextStyle,
 	Color,
