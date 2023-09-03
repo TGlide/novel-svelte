@@ -4,6 +4,7 @@
 	import { useCompletion } from 'ai/svelte';
 	import type { CommandItemProps } from './slash-command.js';
 	import { anyify } from '$lib/utils.js';
+	import { addToast } from '$lib/ui/toasts.svelte';
 
 	export let items: CommandItemProps[] = [];
 	export let command: any;
@@ -17,7 +18,12 @@
 		api: '/api/generate',
 		onResponse: (response) => {
 			if (response.status === 429) {
-				// toast.error('You have reached your request limit for the day.');
+				addToast({
+					data: {
+						text: 'You have reached your request limit for the day.',
+						type: 'error'
+					}
+				});
 				// va.track('Rate Limit Reached');
 				return;
 			}
@@ -31,7 +37,12 @@
 			});
 		},
 		onError: (e) => {
-			// toast.error(e.message);
+			addToast({
+				data: {
+					text: e.message,
+					type: 'error'
+				}
+			});
 		}
 	});
 

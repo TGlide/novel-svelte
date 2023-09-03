@@ -10,6 +10,7 @@
 	import { defaultEditorContent } from './default-content.js';
 	import { defaultExtensions } from './extensions/index.js';
 	import { defaultEditorProps } from './props.js';
+	import Toasts, { addToast } from '../toasts.svelte';
 	/**
 	 * The API route to use for the OpenAI completion API.
 	 * Defaults to "/api/generate".
@@ -69,13 +70,18 @@
 				from: editor.state.selection.from - completion.length,
 				to: editor.state.selection.from
 			});
+		},
+		onError: (err) => {
+			addToast({
+				data: {
+					text: err.message,
+					type: 'error'
+				}
+			});
+			// if (err.message === 'You have reached your request limit for the day.') {
+			// 	va.track('Rate Limit Reached');
+			// }
 		}
-		// onError: (err) => {
-		// 	toast.error(err.message);
-		// 	if (err.message === 'You have reached your request limit for the day.') {
-		// 		va.track('Rate Limit Reached');
-		// 	}
-		// }
 	});
 
 	const content = createLocalStorageStore(storageKey, defaultValue);
@@ -152,3 +158,5 @@
 		<ImageResizer {editor} />
 	{/if}
 </div>
+
+<Toasts />
