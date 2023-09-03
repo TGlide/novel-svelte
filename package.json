@@ -1,11 +1,11 @@
 {
 	"name": "novel-svelte",
-	"version": "0.1.1",
+	"version": "0.1.6",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
 		"preview": "vite preview",
-		"package": "svelte-kit sync && svelte-package && publint",
+		"package": "npx tailwindcss -o ./src/lib/styles/tailwind.css && svelte-kit sync && svelte-package && publint",
 		"prepublishOnly": "npm run package",
 		"test": "npm run test:integration && npm run test:unit",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -30,8 +30,6 @@
 		"svelte": "^4.0.0"
 	},
 	"devDependencies": {
-		"@melt-ui/pp": "^0.1.2",
-		"@melt-ui/svelte": "^0.42.0",
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
@@ -52,7 +50,6 @@
 		"publint": "^0.1.9",
 		"svelte": "^4.0.5",
 		"svelte-check": "^3.4.3",
-		"svelte-sequential-preprocessor": "^2.0.1",
 		"tailwindcss": "^3.3.2",
 		"tailwindcss-animate": "^1.0.7",
 		"tslib": "^2.4.1",
@@ -64,6 +61,9 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
+		"@melt-ui/pp": "^0.1.2",
+		"@melt-ui/svelte": "^0.42.0",
+		"svelte-sequential-preprocessor": "^2.0.1",
 		"@tiptap/core": "^2.1.7",
 		"@tiptap/extension-bubble-menu": "^2.1.7",
 		"@tiptap/extension-color": "^2.0.4",

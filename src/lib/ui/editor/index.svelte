@@ -1,4 +1,9 @@
 <script lang="ts">
+	// import 'cal-sans';
+	import '../../styles/index.css';
+	import '../../styles/prosemirror.css';
+	import '../../styles/tailwind.css';
+
 	import { getPrevText } from '$lib/editor.js';
 	import { createLocalStorageStore } from '$lib/stores/localStorage.js';
 	import { createDebouncedCallback, noop } from '$lib/utils.js';
