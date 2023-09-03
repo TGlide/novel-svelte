@@ -11,6 +11,9 @@
 	import { defaultExtensions } from './extensions/index.js';
 	import { defaultEditorProps } from './props.js';
 	import Toasts, { addToast } from '../toasts.svelte';
+
+	import EditorBubbleMenu from './bubble-menu/index.svelte';
+
 	/**
 	 * The API route to use for the OpenAI completion API.
 	 * Defaults to "/api/generate".
@@ -151,6 +154,10 @@
 		return () => editor.destroy();
 	});
 </script>
+
+{#if editor}
+	<EditorBubbleMenu {editor} />
+{/if}
 
 <div id="editor" class={className} bind:this={element}>
 	<slot />

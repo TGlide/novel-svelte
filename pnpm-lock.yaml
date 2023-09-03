@@ -8,6 +8,9 @@ dependencies:
   '@tiptap/core':
     specifier: ^2.1.7
     version: 2.1.7(@tiptap/pm@2.1.7)
+  '@tiptap/extension-bubble-menu':
+    specifier: ^2.1.7
+    version: 2.1.7(@tiptap/core@2.1.7)(@tiptap/pm@2.1.7)
   '@tiptap/extension-color':
     specifier: ^2.0.4
     version: 2.1.7(@tiptap/core@2.1.7)(@tiptap/extension-text-style@2.1.7)
@@ -784,6 +787,17 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.1.7(@tiptap/pm@2.1.7)
+    dev: false
+
+  /@tiptap/extension-bubble-menu@2.1.7(@tiptap/core@2.1.7)(@tiptap/pm@2.1.7):
+    resolution: {integrity: sha512-VcwwUgiG17TEDZda1JBbyKCHLIBTu8B2OAzYrnd4ZqeRs5KTVAB279o/TVjsLVgEfC+c7IWwhhaPPMoXn/lJ3g==}
+    peerDependencies:
+      '@tiptap/core': ^2.0.0
+      '@tiptap/pm': ^2.0.0
+    dependencies:
+      '@tiptap/core': 2.1.7(@tiptap/pm@2.1.7)
+      '@tiptap/pm': 2.1.7
+      tippy.js: 6.3.7
     dev: false
 
   /@tiptap/extension-bullet-list@2.1.7(@tiptap/core@2.1.7):

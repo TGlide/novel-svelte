@@ -15,6 +15,13 @@ import { InputRule } from '@tiptap/core';
 import SlashCommand from './slash-command.js';
 import UpdatedImage from './updated-image.js';
 import UploadImagesPlugin from '../plugins/upload-images.js';
+import BubbleMenu from '@tiptap/extension-bubble-menu';
+import {
+	isColorSelectorOpen,
+	isLinkSelectorOpen,
+	isNodeSelectorOpen
+} from '../bubble-menu/index.svelte';
+import { isBrowser } from '$lib/utils.js';
 // import UploadImagesPlugin from "@/ui/editor/plugins/upload-images";
 // import UpdatedImage from "./updated-image";
 

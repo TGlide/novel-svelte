@@ -65,6 +65,7 @@
 	"type": "module",
 	"dependencies": {
 		"@tiptap/core": "^2.1.7",
+		"@tiptap/extension-bubble-menu": "^2.1.7",
 		"@tiptap/extension-color": "^2.0.4",
 		"@tiptap/extension-highlight": "^2.0.4",
 		"@tiptap/extension-horizontal-rule": "^2.0.4",
