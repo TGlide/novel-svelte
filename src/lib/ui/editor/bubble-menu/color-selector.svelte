@@ -1,13 +1,15 @@
-<script lang="ts">
-	import { createPopover, melt } from '@melt-ui/svelte';
-
-	import { Editor } from '@tiptap/core';
-	import { Check, ChevronDown } from 'lucide-svelte';
-
+<script lang="ts" context="module">
 	export interface BubbleColorMenuItem {
 		name: string;
 		color: string;
 	}
+</script>
+
+<script lang="ts">
+	import { createPopover, melt } from '@melt-ui/svelte';
+
+	import type { Editor } from '@tiptap/core';
+	import { Check, ChevronDown } from 'lucide-svelte';
 
 	export let editor: Editor;
 	export let isOpen: boolean;
@@ -118,10 +120,8 @@
 		>
 			<span
 				class="rounded-sm px-1"
-				style={{
-					color: activeColorItem?.color,
-					backgroundColor: activeHighlightItem?.color
-				}}
+				style:color={activeColorItem?.color}
+				style:background-color={activeHighlightItem?.color}
 			>
 				A
 			</span>
@@ -135,10 +135,9 @@
 			class="z-[99999] my-1 flex max-h-80 w-48 flex-col overflow-hidden overflow-y-auto rounded border border-stone-200 bg-white p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
 		>
 			<div class="my-1 px-2 text-sm text-stone-500">Color</div>
-			{#each TEXT_COLORS as { name, color }, index}
+			{#each TEXT_COLORS as { name, color }, index (index)}
 				<button
-					key={index}
-					onClick={() => {
+					on:click={() => {
 						editor.commands.unsetColor();
 						name !== 'Default' &&
 							editor
@@ -152,10 +151,7 @@
 					type="button"
 				>
 					<div class="flex items-center space-x-2">
-						<div
-							class="rounded-sm border border-stone-200 px-1 py-px font-medium"
-							style={{ color }}
-						>
+						<div class="rounded-sm border border-stone-200 px-1 py-px font-medium" style:color>
 							A
 						</div>
 						<span>{name}</span>
@@ -168,10 +164,9 @@
 
 			<div class="mb-1 mt-2 px-2 text-sm text-stone-500">Background</div>
 
-			{#each HIGHLIGHT_COLORS as { name, color }, index}
+			{#each HIGHLIGHT_COLORS as { name, color }, index (index)}
 				<button
-					key={index}
-					onClick={() => {
+					on:click={() => {
 						editor.commands.unsetHighlight();
 						name !== 'Default' && editor.commands.setHighlight({ color });
 						isOpen = false;
@@ -182,7 +177,7 @@
 					<div class="flex items-center space-x-2">
 						<div
 							class="rounded-sm border border-stone-200 px-1 py-px font-medium"
-							style={{ backgroundColor: color }}
+							style:background-color={color}
 						>
 							A
 						</div>
