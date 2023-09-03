@@ -22,6 +22,8 @@
 	import { BubbleMenuPlugin, type BubbleMenuPluginProps } from '@tiptap/extension-bubble-menu';
 	import { onDestroy, onMount } from 'svelte';
 
+	let element: HTMLElement;
+
 	export let editor: Editor;
 	export let tippyOptions: BubbleMenuPluginProps['tippyOptions'] = {
 		moveTransition: 'transform 0.15s ease-out',
@@ -40,7 +42,6 @@
 		return editor.view.state.selection.content().size > 0;
 	};
 	export let updateDelay: BubbleMenuPluginProps['updateDelay'] = 250;
-	let element: HTMLElement;
 
 	const items: BubbleMenuItem[] = [
 		{
@@ -102,7 +103,7 @@
 			pluginKey,
 			editor,
 			element,
-			tippyOptions: {},
+			tippyOptions,
 			shouldShow,
 			updateDelay
 		});
@@ -116,7 +117,7 @@
 </script>
 
 <div
-	id="bubble-menu"
+	bind:this={element}
 	class="flex w-fit divide-x divide-stone-200 rounded border border-stone-200 bg-white shadow-xl"
 >
 	<NodeSelector {editor} bind:isOpen={$isNodeSelectorOpen} />
