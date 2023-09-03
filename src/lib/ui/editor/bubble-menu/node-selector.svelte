@@ -17,15 +17,15 @@
 
 	export let editor: Editor;
 	export let isOpen: boolean;
+	$: console.log('editor changed', editor);
 
-	// const items: BubbleMenuItem[] = [
-	const items: any[] = [
+	$: items = [
 		{
 			name: 'Text',
 			icon: TextIcon,
 			command: () => editor.chain().focus().toggleNode('paragraph', 'paragraph').run(),
 			// I feel like there has to be a more efficient way to do this – feel free to PR if you know how!
-			isActive: () =>
+			isActive:
 				editor.isActive('paragraph') &&
 				!editor.isActive('bulletList') &&
 				!editor.isActive('orderedList')
@@ -34,54 +34,54 @@
 			name: 'Heading 1',
 			icon: Heading1,
 			command: () => editor.chain().focus().toggleHeading({ level: 1 }).run(),
-			isActive: () => editor.isActive('heading', { level: 1 })
+			isActive: editor.isActive('heading', { level: 1 })
 		},
 		{
 			name: 'Heading 2',
 			icon: Heading2,
 			command: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
-			isActive: () => editor.isActive('heading', { level: 2 })
+			isActive: editor.isActive('heading', { level: 2 })
 		},
 		{
 			name: 'Heading 3',
 			icon: Heading3,
 			command: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
-			isActive: () => editor.isActive('heading', { level: 3 })
+			isActive: editor.isActive('heading', { level: 3 })
 		},
 		{
 			name: 'To-do List',
 			icon: CheckSquare,
 			command: () => editor.chain().focus().toggleTaskList().run(),
-			isActive: () => editor.isActive('taskItem')
+			isActive: editor.isActive('taskItem')
 		},
 		{
 			name: 'Bullet List',
 			icon: ListOrdered,
 			command: () => editor.chain().focus().toggleBulletList().run(),
-			isActive: () => editor.isActive('bulletList')
+			isActive: editor.isActive('bulletList')
 		},
 		{
 			name: 'Numbered List',
 			icon: ListOrdered,
 			command: () => editor.chain().focus().toggleOrderedList().run(),
-			isActive: () => editor.isActive('orderedList')
+			isActive: editor.isActive('orderedList')
 		},
 		{
 			name: 'Quote',
 			icon: TextQuote,
 			command: () =>
 				editor.chain().focus().toggleNode('paragraph', 'paragraph').toggleBlockquote().run(),
-			isActive: () => editor.isActive('blockquote')
+			isActive: editor.isActive('blockquote')
 		},
 		{
 			name: 'Code',
 			icon: Code,
 			command: () => editor.chain().focus().toggleCodeBlock().run(),
-			isActive: () => editor.isActive('codeBlock')
+			isActive: editor.isActive('codeBlock')
 		}
 	];
 
-	const activeItem = items.filter((item) => item.isActive()).pop() ?? {
+	$: activeItem = items.filter((item) => item.isActive).pop() ?? {
 		name: 'Multiple'
 	};
 
@@ -125,7 +125,7 @@
 				>
 					<div class="flex items-center space-x-2">
 						<div class="rounded-sm border border-stone-200 p-1">
-							<item.icon class="h-3 w-3" />
+							<svelte:component this={item.icon} class="h-3 w-3" />
 						</div>
 						<span>{item.name}</span>
 					</div>
