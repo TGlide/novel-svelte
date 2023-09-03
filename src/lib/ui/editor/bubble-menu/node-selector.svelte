@@ -13,11 +13,9 @@
 		Code,
 		CheckSquare
 	} from 'lucide-svelte';
-	// import { BubbleMenuItem } from '.';
 
 	export let editor: Editor;
 	export let isOpen: boolean;
-	$: console.log('editor changed', editor);
 
 	$: items = [
 		{
