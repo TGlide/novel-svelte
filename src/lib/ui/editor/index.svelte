@@ -160,7 +160,7 @@
 	});
 </script>
 
-{#if editor}
+{#if editor && editor.isEditable}
 	<EditorBubbleMenu {editor} />
 {/if}
 
