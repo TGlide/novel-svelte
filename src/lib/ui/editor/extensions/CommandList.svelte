@@ -102,6 +102,7 @@
 				{index === selectedIndex ? 'bg-stone-100 text-stone-900' : ''}"
 				on:click={() => selectItem(index)}
 				data-index={index}
+				type="button"
 			>
 				<div
 					class="flex h-10 w-10 items-center justify-center rounded-md border border-stone-200 bg-white"
