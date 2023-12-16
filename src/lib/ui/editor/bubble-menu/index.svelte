@@ -6,9 +6,6 @@
 		icon: typeof BoldIcon;
 	}
 
-	export let isNodeSelectorOpen = writable(false);
-	export let isColorSelectorOpen = writable(false);
-	export let isLinkSelectorOpen = writable(false);
 </script>
 
 <script lang="ts">
@@ -23,6 +20,10 @@
 	import { onDestroy, onMount } from 'svelte';
 
 	let element: HTMLElement;
+
+	let isNodeSelectorOpen = writable(false);
+	let isColorSelectorOpen = writable(false);
+	let isLinkSelectorOpen = writable(false);
 
 	export let editor: Editor;
 	export let tippyOptions: BubbleMenuPluginProps['tippyOptions'] = {
