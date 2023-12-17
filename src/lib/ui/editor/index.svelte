@@ -66,6 +66,11 @@
 	 * Defaults to "novel__content".
 	 */
 	export let storageKey = 'novel__content';
+	/**
+	 * Disable local storage read/save.
+	 * Defaults to false.
+	 */
+	export let disableLocalStorage = false;
 
 	let element: Element;
 	let editor: Editor;
@@ -94,8 +99,13 @@
 
 	const content = createLocalStorageStore(storageKey, defaultValue);
 	let hydrated = false;
-	$: if (editor && $content && !hydrated) {
-		editor.commands.setContent($content);
+	$: if (editor && !hydrated) {
+		const value = disableLocalStorage ? defaultValue : $content;
+
+		if (value) {
+			editor.commands.setContent(value);
+		}
+
 		hydrated = true;
 	}
 
@@ -115,7 +125,11 @@
 
 	const debouncedUpdates = createDebouncedCallback(async ({ editor }) => {
 		const json = editor.getJSON();
-		content.set(json);
+
+		if (!disableLocalStorage) {
+			content.set(json);
+		}
+
 		onDebouncedUpdate(editor);
 	}, debounceDuration);
 
