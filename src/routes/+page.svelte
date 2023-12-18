@@ -1,15 +1,23 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { Editor } from '$lib/index.js';
+	import type { EditorType } from '$lib/index.js';
 	import Nav from './nav.svelte';
-	
 
 	let saveStatus = 'Saved';
+	let editor: EditorType;
+
+	onMount(() => {
+		// Use the tiptap editor instance
+		console.log({ editor });
+	});
 </script>
 
 <Nav />
 
 <main class="flex justify-center sm:pt-[15vh] sm:px-4">
 	<Editor
+		bind:editor
 		onUpdate={() => {
 			saveStatus = 'Unsaved';
 		}}
