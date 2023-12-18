@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { Editor } from '$lib/index.js';
-	import type { EditorType } from '$lib/index.js';
+	import { type EditorType, Editor } from '$lib/index.js';
 	import Nav from './nav.svelte';
 
 	let saveStatus = 'Saved';
