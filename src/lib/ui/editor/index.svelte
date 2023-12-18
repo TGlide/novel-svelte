@@ -66,9 +66,12 @@
 	 * Defaults to "novel__content".
 	 */
 	export let storageKey = 'novel__content';
+	/**
+	 * The Editor instance created onMount
+	 */
+	export let editor: Editor;
 
 	let element: Element;
-	let editor: Editor;
 
 	const { complete, completion, isLoading, stop } = useCompletion({
 		id: 'novel',
