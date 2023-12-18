@@ -60,6 +60,7 @@
 >
 	<div class="w-full" use:melt={$radioGroup}>
 		<button
+			type="button"
 			class="w-full flex items-center gap-2 data-[highlighted]:bg-stone-100 p-2 rounded-[5px]"
 			use:melt={$radioItem({ value: 'system' })}
 		>
@@ -70,6 +71,7 @@
 			{/if}
 		</button>
 		<button
+			type="button"
 			class="w-full flex items-center gap-2 data-[highlighted]:bg-stone-100 p-2 rounded-[5px]"
 			use:melt={$radioItem({ value: 'dark' })}
 		>
@@ -80,6 +82,7 @@
 			{/if}
 		</button>
 		<button
+			type="button"
 			class="w-full flex items-center gap-2 data-[highlighted]:bg-stone-100 p-2 rounded-[5px]"
 			use:melt={$radioItem({ value: 'light' })}
 		>
