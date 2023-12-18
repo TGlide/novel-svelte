@@ -68,7 +68,7 @@
 	export let storageKey = 'novel__content';
 	/**
 	 * Disable local storage read/save.
-	 * Defaults to false.
+	 * @default false
 	 */
 	export let disableLocalStorage = false;
 
