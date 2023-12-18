@@ -69,7 +69,7 @@
 	/**
 	 * The Editor instance created onMount
 	 */
-	export let editor: Editor;
+	export let editor: Editor | undefined = undefined;
 
 	let element: Element;
 
