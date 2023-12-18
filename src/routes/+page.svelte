@@ -1,16 +1,10 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { Editor } from '$lib/index.js';
 	import type { EditorType } from '$lib/index.js';
 	import Nav from './nav.svelte';
 
 	let saveStatus = 'Saved';
 	let editor: EditorType;
-
-	onMount(() => {
-		// Use the tiptap editor instance
-		console.log({ editor });
-	});
 </script>
 
 <Nav />
