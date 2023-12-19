@@ -7,7 +7,7 @@ import type { RequestHandler } from '@sveltejs/kit';
 
 // Create an OpenAI API client (that's edge friendly!)
 const openai = new OpenAI({
-	apiKey: process.env.OPENAI_API_KEY || ''
+	apiKey: OPENAI_API_KEY || ''
 });
 
 // IMPORTANT! Set the runtime to edge: https://vercel.com/docs/functions/edge-functions/edge-runtime
