@@ -71,9 +71,19 @@
 	 * @default false
 	 */
 	export let disableLocalStorage = false;
+  /**
+	 * The editor instance. Bind to it to get access to the editor.
+	 * @example
+	 * <script lang="ts">
+	 * 	import { type EditorType, Editor } from 'novel-svelte';
+	 * 	let editor: EditorType;
+	 * </script>
+	 * 
+	 * <Editor bind:editor />
+	 */
+	export let editor: Editor | undefined = undefined;
 
 	let element: Element;
-	let editor: Editor;
 
 	const { complete, completion, isLoading, stop } = useCompletion({
 		id: 'novel',
