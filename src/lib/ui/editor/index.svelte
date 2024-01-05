@@ -71,7 +71,7 @@
 	 * @default false
 	 */
 	export let disableLocalStorage = false;
-  /**
+  	/**
 	 * The editor instance. Bind to it to get access to the editor.
 	 * @example
 	 * <script lang="ts">
