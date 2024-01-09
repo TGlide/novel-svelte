@@ -67,6 +67,11 @@
 	 */
 	export let storageKey = 'novel__content';
 	/**
+	 * Disable local storage read/save.
+	 * @default false
+	 */
+	export let disableLocalStorage = false;
+  	/**
 	 * The editor instance. Bind to it to get access to the editor.
 	 * @example
 	 * <script lang="ts">
@@ -104,8 +109,13 @@
 
 	const content = createLocalStorageStore(storageKey, defaultValue);
 	let hydrated = false;
-	$: if (editor && $content && !hydrated) {
-		editor.commands.setContent($content);
+	$: if (editor && !hydrated) {
+		const value = disableLocalStorage ? defaultValue : $content;
+
+		if (value) {
+			editor.commands.setContent(value);
+		}
+
 		hydrated = true;
 	}
 
@@ -124,8 +134,11 @@
 	}
 
 	const debouncedUpdates = createDebouncedCallback(async ({ editor }) => {
-		const json = editor.getJSON();
-		content.set(json);
+		if (!disableLocalStorage) {
+			const json = editor.getJSON();
+			content.set(json);
+		}
+
 		onDebouncedUpdate(editor);
 	}, debounceDuration);
 
