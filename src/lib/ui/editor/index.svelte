@@ -134,9 +134,8 @@
 	}
 
 	const debouncedUpdates = createDebouncedCallback(async ({ editor }) => {
-		const json = editor.getJSON();
-
 		if (!disableLocalStorage) {
+			const json = editor.getJSON();
 			content.set(json);
 		}
 
