@@ -2,12 +2,12 @@ import OpenAI from 'openai';
 import { OpenAIStream, StreamingTextResponse } from 'ai';
 import { kv } from '@vercel/kv';
 import { Ratelimit } from '@upstash/ratelimit';
-import { OPENAI_API_KEY } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import type { RequestHandler } from '@sveltejs/kit';
 
 // Create an OpenAI API client (that's edge friendly!)
 const openai = new OpenAI({
-	apiKey: OPENAI_API_KEY || ''
+	apiKey: env.OPENAI_API_KEY || ''
 });
 
 // IMPORTANT! Set the runtime to edge: https://vercel.com/docs/functions/edge-functions/edge-runtime
@@ -17,8 +17,8 @@ export const config = {
 
 export const POST: RequestHandler = async ({ request: req }) => {
 	// Check if the OPENAI_API_KEY is set, if not return 400
-	if (!OPENAI_API_KEY) {
-		return new Response('Missing OPENAI_API_KEY – make sure to add it to your .env file.', {
+	if (!env.OPENAI_API_KEY) {
+		return new Response('Missing OPENAI_API_KEY – make sure to add it to your .env file.', {
 			status: 400
 		});
 	}
