@@ -90,5 +90,8 @@
 		"tailwind-merge": "^1.14.0",
 		"tippy.js": "^6.3.7",
 		"tiptap-markdown": "^0.8.2"
+	},
+	"engines": {
+		"node": ">=20.0.0"
 	}
 }
