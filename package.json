@@ -63,7 +63,7 @@
 	"dependencies": {
 		"@melt-ui/pp": "^0.1.2",
 		"@melt-ui/svelte": "^0.42.0",
-		"svelte-sequential-preprocessor": "^2.0.1",
+		"@sveltejs/adapter-node": "^5.3.2",
 		"@tiptap/core": "^2.1.7",
 		"@tiptap/extension-bubble-menu": "^2.1.7",
 		"@tiptap/extension-color": "^2.0.4",
@@ -86,6 +86,7 @@
 		"openai": "^4.4.0",
 		"prettier-plugin-tailwindcss": "^0.5.4",
 		"svelte-moveable": "^0.43.1",
+		"svelte-sequential-preprocessor": "^2.0.1",
 		"tailwind-merge": "^1.14.0",
 		"tippy.js": "^6.3.7",
 		"tiptap-markdown": "^0.8.2"
